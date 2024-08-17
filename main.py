@@ -26,7 +26,8 @@ def brand_create():
         print("You selected no. Returning to start.")
         brand_create()
     else:
-        print("Unexpected value. Exiting.")      
+        print("Unexpected value. Exiting.")
+        return None      
     return brand
 
 #function to receive and store the model of a specific tyre
@@ -84,14 +85,14 @@ def type_create():
 #for the sake of simplicity I will only use a few attributes at first
 #-brand - str
 #-model - str
-#-type - tuple
-#-state - tuple
+#-type - list
+#-state - list
 #-starting_odo (odometer reading at which lifespan of tyre starts) - int
 def tyre_creation():
     print("Hello first function")
     #brand_create()
     #model_create()
-    type_create()
+    #type_create()
      
         
 
