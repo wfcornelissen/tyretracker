@@ -5,7 +5,7 @@ state = tuple()
 starting_odo = int()
 serial = str()
 conf = str()
-tyre_db = {}
+tyre_db = []
 
 
 
@@ -44,56 +44,22 @@ def model_create():
         print("Unexpected value. Exiting.")
     return model
 
-#function to receive and store the type of a specific tyre
-def type_create():
-    type = ["1. Steer", "2. Pull", "3. Roll"]
-    print(type)
-    temp_type = int(input(f"Please select type from the above: "))
-    print(temp_type)
-    if temp_type == int(1):
-        conf_type = str(input(f"You have selected 1. Steer. Is this correct? (y/n)"))
-        if conf_type.lower() == "y":
-            print("Type saved")
-            type = conf_type
-            return type
-        else:
-            type_create()
-    elif temp_type == int(2):
-        conf_type = str(input(f"You have selected 2. Pull. Is this correct? (y/n)"))
-        if conf_type.lower() == "y":
-            print("Type saved")
-            type = conf_type
-            return type
-        else:
-            type_create()
-    elif temp_type == int(3):
-        conf_type = str(input(f"You have selected 3. Roll. Is this correct? (y/n)"))
-        if conf_type.lower() == "y":
-            print("Type saved")
-            type = conf_type
-            return type
-        else:
-            type_create()
-    else:
-        print("Error: Input invalid.")
-        type_create() 
-
-    pass
 
 #alternative coding for capturing tyre type. After practicing use of lists.
-def type_create_alt():
+def type_create():
     type = ["1. Steer", "2. Pull", "3. Roll"]
     print(type)
     temp_type = int(input(f"Please select type from the above: (1/2/3)"))
     conf_type = (input(f"You have selected {type[temp_type-1]}. Is this correct? (y/n)"))
     if conf_type.lower() == 'y':
         print("Type Saved")
-        return type[temp_type-1]
+        temp_type = type[temp_type-1]
+        return temp_type
     elif conf_type.lower() == 'n':
-        type_create_alt()
+        type_create()
     else:
         print("Invalid selection. Please try again.")
-        type_create_alt
+        type_create()
 
 def state_create():
     print("starting state create function")
@@ -112,22 +78,23 @@ def state_create():
     
 
 def starting_create():
-    #starting_odo = get_latest_odo()
-    starting_odo = 0
+    starting_odo = get_latest_odo()
+    #starting_odo = 0
     cust_conf = input(f"The default odo reading is {starting_odo}. Would you like to enter custom odo? (y/n)")
     if cust_conf.lower() == 'y':
-        new_odo = input(f"Please enter new odo:  ")
+        new_odo = int(input(f"Please enter new odo:  "))
         if (new_odo > 0) and (new_odo > starting_odo):
             starting_odo = new_odo
+            print(f"{starting_odo} has been recorded as the starting odo of this tyre.")
             return starting_odo
         else:
-            raise Exception("odo cannot be lower than last known odo of truck")
-        
-
-
-
-
-
+            print("Custom odo reading cannot be lower than last known odo of truck")
+            starting_create()
+    elif cust_conf.lower() == 'n':
+        return starting_odo
+    else:
+        print("Unexpected value. Please try again.")
+        starting_create()    
 
     pass
     
@@ -149,12 +116,21 @@ def get_latest_odo():
 
 def tyre_creation():
     print("Hello first function")
-    #brand_create()
-    #model_create()
-    #type_create()
-    #type_create_alt() 
-    #state_create()
-        
+    new_tyre = {"Brand": "" , 
+                "Model" : "",
+                "Type" : "",
+                "State" : "",
+                "Start" : 0
+                }
+    
+    new_tyre["Brand"] = brand_create()
+    new_tyre["Model"] = model_create()
+    new_tyre["Type"] = type_create()
+    new_tyre["State"] = state_create()
+    new_tyre["Start"] = starting_create()
+    
+    tyre_db.append(new_tyre)
+    print(new_tyre)
 
         
 main()
