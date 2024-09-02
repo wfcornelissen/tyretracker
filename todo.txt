@@ -1,1 +1,11 @@
 Add in comments to functions
+
+def file_type_getter(file_extension_tuples):
+    new_dict = {}
+    get_file_type = lambda new_dict: {}.get(new_dict,'not found')
+    for i in range(len(file_extension_tuples)):
+        file_type = file_extension_tuples[i][0]
+        for o in range(len(file_extension_tuples[i][1])):
+            new_dict[file_extension_tuples[i][1][o]] = file_type
+            print(file_type)
+    return get_file_type
